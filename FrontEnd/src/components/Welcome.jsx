@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import Register from './Register'
+import Login from './Login'
 
 const Welcome = () => {
 
-    const [show, setShow] = useState(false)
+    const [showLogin, setShowLogin] = useState(false)
+    const [showRegister, setShowRegister] = useState(false)
+
 
   return (
     <main>
@@ -21,10 +24,10 @@ const Welcome = () => {
             <div className='text-gray-800 text-center'>or</div>
             <div className='w-28 h-[1px] bg-gray-200'></div>
           </div>
-          <button onClick={() => setShow(true)} className='border w-64 font-semibold text-sm text-white bg-[#1D9BF0] hover:bg-[#108CD8] duration-200 rounded-full h-10'>Create account</button>
+          <button onClick={() => setShowRegister(true)} className='border w-64 font-semibold text-sm text-white bg-[#1D9BF0] hover:bg-[#108CD8] duration-200 rounded-full h-10'>Create account</button>
           <p className='text-xs text-center'>By signing up, you agree to the <span className='text-[#1D9BF0]'>Terms of Service</span> and <span className='text-[#1D9BF0]'>Privacy Policy</span>, including <span className='text-[#1D9BF0]'>Cookie Use</span>.</p>
           <h3 className='text-lg font-semibold'>Already have an account?</h3>
-          <button className='border w-64 border-gray-300 font-semibold text-sm rounded-full hover:bg-gray-100 duration-200 text-[#1D9BF0] h-10'>Sign in</button>
+          <button onClick={() => setShowLogin(true)} className='border w-64 border-gray-300 font-semibold text-sm rounded-full hover:bg-gray-100 duration-200 text-[#1D9BF0] h-10'>Sign in</button>
         </div>
       </div>
       <div className='flex flex-wrap justify-center p-5 text-gray-700 max-[1000px]:gap-2 gap-4 max-[1000px]:text-xs text-sm mt-10'>
@@ -48,7 +51,8 @@ const Welcome = () => {
         <p>Settings</p>
         <p>©2023 X Corp.</p>
       </div>
-      {show && <Register setShow={setShow} />}
+      {showRegister && <Register setShowRegister={setShowRegister} />}
+      {showLogin && <Login setShowLogin={setShowLogin}/>}
     </main>
   )
 }
