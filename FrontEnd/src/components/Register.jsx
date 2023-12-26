@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react'
-
 const Register = (props) => {
 
     const formRef = useRef(null)
