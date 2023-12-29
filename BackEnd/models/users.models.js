@@ -18,10 +18,19 @@ const userSchema = Schema ({
         type: String,
         required: true
     },
-    rol: {
+    role: {
         type: String,
-        default: 'user'
-    }
+        default: 'user',
+    },
+    posts: [{
+        type: Schema.Types.ObjectId,
+        ref: 'posts'
+    }],
 },{timestamps: true})
+
+userSchema.pre('findOne', function () {
+    this.populate('posts');
+});
+
 
 export const userModel = model('users', userSchema)
