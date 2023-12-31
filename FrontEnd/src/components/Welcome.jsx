@@ -7,6 +7,10 @@ const Welcome = () => {
     const [showLogin, setShowLogin] = useState(false)
     const [showRegister, setShowRegister] = useState(false)
 
+    const handleRedirect = () => {
+      setShowLogin(false);
+      setShowRegister(true);
+    }
 
   return (
     <main>
@@ -52,7 +56,7 @@ const Welcome = () => {
         <p>©2023 X Corp.</p>
       </div>
       {showRegister && <Register setShowRegister={setShowRegister} />}
-      {showLogin && <Login setShowLogin={setShowLogin}/>}
+      {showLogin && <Login handleRedirect={handleRedirect} setShowLogin={setShowLogin}/>}
     </main>
   )
 }

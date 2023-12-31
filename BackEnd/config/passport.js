@@ -4,6 +4,7 @@ import passport from 'passport'
 import jwt from 'passport-jwt'
 import { createHash, validatePassword } from '../utils/bcrypt.js'
 import { userModel } from '../models/users.models.js'
+import { postModel } from '../models/posts.models.js'
 
 
 const LocalStraregy = local.Strategy
@@ -29,7 +30,7 @@ const initializePassport = () => {
         }
     }))
 
-    passport.use('register', new LocalStraregy({ passReqToCallback: true, usernameField: 'email' }, async (req, username, password, done) => {
+    passport.use('register', new LocalStraregy({ passReqToCallback: true, usernameField: 'email' }, async (req, nickname, password, done) => {
         const { name, email, age } = req.body
         try {
             const user = await userModel.findOne({ email: email })

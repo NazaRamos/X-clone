@@ -5,9 +5,9 @@ export const getUsers = async (req, res) => {
 
     try {
         const users = await userModel.find().limit(limit)
-        res.status(200).send({ respuesta: 'OK', mensaje: users })
+        res.status(200).send({ response: 'OK', mensaje: users })
     } catch (error) {
-        res.status(400).send({ respuesta: 'Error getting users', mensaje: error })
+        res.status(400).send({ response: 'Error getting users', mensaje: error })
     }
 }
 
@@ -18,12 +18,12 @@ export const getUser = async (req, res) => {
         const user = await userModel.findById(id)
         if (user) {
 
-            res.status(200).send({ respuesta: 'OK', mensaje: user })
+            res.status(200).send({ response: 'OK', mensaje: user })
         } else {
-            res.status(404).send({ respuesta: 'Error', mensaje: 'Not Found' })
+            res.status(404).send({ response: 'Error', mensaje: 'Not Found' })
         }
     } catch (error) {
-        res.status(400).send({ respuesta: 'Error getting users', mensaje: error })
+        res.status(400).send({ response: 'Error getting users', mensaje: error })
     }
 }
 
@@ -34,13 +34,13 @@ export const putUser = async (req, res) => {
     try {
         const user = await userModel.findByIdAndUpdate(id, { firstName, lastName, age, email, password})
         if (user) {
-            res.status(200).send({ respuesta: 'OK', mensaje: user })
+            res.status(200).send({ response: 'OK', mensaje: user })
         } else {
-            res.status(404).send({ respuesta: 'Error', mensaje: 'Not Found' })
+            res.status(404).send({ response: 'Error', mensaje: 'Not Found' })
         }
         
     } catch (error) {
-        res.status(400).send({ respuesta: 'Error getting users', mensaje: error })
+        res.status(400).send({ response: 'Error getting users', mensaje: error })
     }
 }
 
@@ -50,12 +50,12 @@ export const deleteUser = async (req, res) => {
     try {
         const user = await userModel.findByIdAndDelete(id)
         if (user) {
-            res.status(200).send({ respuesta: 'OK', mensaje: user })
+            res.status(200).send({ response: 'OK', mensaje: user })
         } else {
-            res.status(404).send({ respuesta: 'Error', mensaje: 'Not Found' })
+            res.status(404).send({ response: 'Error', mensaje: 'Not Found' })
         }
         
     } catch (error) {
-        res.status(400).send({ respuesta: 'Error getting users', mensaje: error })
+        res.status(400).send({ response: 'Error getting users', mensaje: error })
     }
 }
