@@ -13,6 +13,7 @@ export const postLogin = async (req, res) => {
             age: req.user.age,
             email: req.user.email,
             rol: req.user.rol,
+            posts: req.user.posts,
             __v: req.user.__v
 
         }

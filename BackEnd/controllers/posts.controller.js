@@ -1,4 +1,5 @@
-import { postsModel } from "../models/posts.models.js";
+import { postModel } from "../models/posts.models.js"
+import { userModel } from "../models/users.models.js"
 
 export const getPosts = async (req, res) =>{
     const { limit, page} = req.query
@@ -10,9 +11,10 @@ export const getPosts = async (req, res) =>{
         let options = {
             limit: parseInt(limit) || 8,
             page: parseInt(page) || 1,
+            sort: { datetime: -1 }
         }
 
-        const posts = await postsModel.paginate(query, options)
+        const posts = await postModel.paginate(query, options)
 
         const response = {
             status: "success",
@@ -26,6 +28,7 @@ export const getPosts = async (req, res) =>{
             prevLink: posts.hasPrevPage ? `http://${req.headers.host}${req.baseUrl}?limit=${options.limit}&page=${posts.prevPage}${link || ''}` : null,
             nextLink: posts.hasNextPage ? `http://${req.headers.host}${req.baseUrl}?limit=${options.limit}&page=${posts.nextPage}${link || ''}` : null
         }
+        console.log(response)
         res.status(200).send({ response: response })
     } catch (error) {
         res.status(400).send({ response: 'Error getting post', mensaje: error })
@@ -36,7 +39,7 @@ export const getPost = async (req, res) => {
     const { id } = req.params
 
     try {
-        const post = await postsModel.findById(id)
+        const post = await postModel.findById(id)
         if (post) {
             res.status(200).send({ response: 'OK', mensaje: post })
         } else {
@@ -52,7 +55,7 @@ export const putPost = async (req, res) => {
     const { content } = req.body
 
     try {
-        const post = await postsModel.findByIdAndUpdate(id, { content })
+        const post = await postModel.findByIdAndUpdate(id, { content })
         if (post) {
             res.status(200).send({ response: 'OK', mensaje: 'Post updated' })
         } else {
@@ -67,7 +70,7 @@ export const deletePost = async (req, res) => {
     const { id } = req.params
 
     try {
-        const post = await postsModel.findByIdAndDelete(id)
+        const post = await postModel.findByIdAndDelete(id)
         if (post) {
             res.status(200).send({ response: 'OK', mensaje: 'Post deleted' })
         } else {
@@ -79,11 +82,11 @@ export const deletePost = async (req, res) => {
 }
 
 export const postPost = async (req, res) => {
-    const { content } = req.body
+    const { content, id } = req.body
     try {
-        const post = await postsModel.create({ content })
-        res.status(200).send(post)
-
+        const post = await postModel.create({ content })
+        await userModel.findByIdAndUpdate(id, { $push: { posts: post._id } })
+        res.status(200).send(post);
     } catch (error) {
         res.status(400).send({ response: 'Error creating post', mensaje: error })
     }
@@ -95,7 +98,7 @@ export const putLike = async (req, res) => {
     const { likes } = req.body
 
     try {
-        const post = await postsModel.findByIdAndUpdate(id, { likes })
+        const post = await postModel.findByIdAndUpdate(id, { likes })
         if (post) {
             res.status(200).send({ response: 'OK', mensaje: 'Like updated' })
         } else {

@@ -9,6 +9,11 @@ const userSchema = Schema ({
         type: Date,
         required: true
     },
+    nickname: {
+        type: String,
+        required: true,
+        unique: true
+    },
     email: {
         type: String,
         required: true,

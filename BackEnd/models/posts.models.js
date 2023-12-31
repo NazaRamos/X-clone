@@ -1,4 +1,5 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from "mongoose"
+import paginate  from "mongoose-paginate-v2"
 
 const postSchema = Schema({
     content: {
@@ -20,7 +21,9 @@ const postSchema = Schema({
 }, { timestamps: true });
 
 postSchema.pre('findOne', function () {
-    this.populate('responses');
-});
+    this.populate('responses')
+})
 
-export const postModel = model('posts', postSchema);
+postSchema.plugin(paginate)
+
+export const postModel = model('posts', postSchema)
