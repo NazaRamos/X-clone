@@ -15,6 +15,7 @@ import {__dirname, __filename} from './utils/utils.js';
 
 import userRouter from './routes/users.routes.js';
 import sessionRouter from './routes/sessions.routes.js';
+import postsRouter from './routes/posts.routes.js';
 
 
 const whiteList = ['http://localhost:5173']
@@ -60,5 +61,6 @@ app.use(passport.session())
 
 app.use('/api/users', userRouter);
 app.use('/api/sessions', sessionRouter)
+app.use('/api/posts', postsRouter)
 
 export default app;
